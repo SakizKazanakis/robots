@@ -1,0 +1,45 @@
+name: Parametric CAD validation
+
+on:
+  push:
+    paths:
+      - 'cad/**'
+      - 'tests/**'
+      - 'requirements.txt'
+      - '.github/workflows/cad.yml'
+  pull_request:
+    paths:
+      - 'cad/**'
+      - 'tests/**'
+      - 'requirements.txt'
+      - '.github/workflows/cad.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cad-build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CAD engine
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+      - name: Check analytical kinematics
+        run: python -m unittest discover -s tests -v
+      - name: Generate and re-import both solid STEP assemblies
+        run: python cad/spider_cad.py --architecture both --params cad/parameters.json --out out
+      - name: Upload CAD build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: spider-robot-cad-step
+          path: out/
+          if-no-files-found: error

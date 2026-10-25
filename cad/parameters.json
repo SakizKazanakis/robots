@@ -1,0 +1,18 @@
+{
+  "body_length": 280,
+  "body_width": 190,
+  "body_thickness": 40,
+  "body_center_z": -40,
+  "coxa": 60,
+  "femur": 95,
+  "tibia": 110,
+  "hip_pitch_deg": 30,
+  "knee_pitch_deg": 90,
+  "splay_deg": 20,
+  "motor_outer_diameter": 53,
+  "motor_axial_depth": 45.2,
+  "shoulder_x": 105,
+  "shoulder_y": 97,
+  "assumed_total_mass_kg": 7.506,
+  "contact_legs_loadcase": 3
+}

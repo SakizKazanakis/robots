@@ -41,6 +41,8 @@ jobs:
         run: python -m cad.legs.engineering
       - name: Generate long-reach linked STEP and DXF concepts
         run: python -m cad.legs.long_reach --params cad/parameters.json --out out
+      - name: Generate redesigned EXOFRAME v0.4 STEP concepts
+        run: python -m cad.legs.exoframe_v04 --params cad/parameters.json --out out
       - name: Upload CAD build artifacts
         uses: actions/upload-artifact@v4
         with:

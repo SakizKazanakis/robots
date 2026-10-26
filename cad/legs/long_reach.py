@@ -206,6 +206,16 @@ def export(p,out):
         assembly.save(str(step),exportType="STEP")
         if not cq.importers.importStep(str(step)).val().isValid():raise ValueError("Invalid leg assembly")
         result["parts"][material+"_assembly"]={"step":step.name,"part_count":len(assembly.children)}
+    coxa=plate(p.coxa,p,"aluminum",windows=False)
+    coxa_path=out/"COXA_RAIL_ALUMINUM_DRAFT.step"
+    cq.exporters.export(coxa,str(coxa_path),exportType="STEP")
+    if not cq.importers.importStep(str(coxa_path)).val().isValid():raise ValueError("Invalid Coxa STEP")
+    result["parts"]["COXA_RAIL_DRAFT"]={"step":coxa_path.name,"volume_mm3":round(coxa.Volume(),3)}
+    foot=cq.Solid.makeSphere(p.foot_radius,cq.Vector(0,0,0))
+    foot_path=out/"FOOT_BALL_ENVELOPE_DRAFT.step"
+    cq.exporters.export(foot,str(foot_path),exportType="STEP")
+    if not cq.importers.importStep(str(foot_path)).val().isValid():raise ValueError("Invalid foot STEP")
+    result["parts"]["FOOT_ENVELOPE_DRAFT"]={"step":foot_path.name}
     cq.exporters.export(spacer(p),str(out/"SPACER_ENVELOPE_DRAFT.step"),exportType="STEP")
     foot=leg_points(p)[3]
     result["nominal_clearance_mm"]=round(-foot[2]+p.foot_radius+p.body_underside_z,3)

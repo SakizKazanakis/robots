@@ -76,7 +76,7 @@ class LongReachTests(unittest.TestCase):
     def test_step_and_dxf_roundtrip(self):
         with tempfile.TemporaryDirectory() as d:
             result=export(self.p,d)
-            self.assertEqual(len(result["parts"]),6)
+            self.assertEqual(len(result["parts"]),8)
             for part in result["parts"].values():
                 self.assertTrue(Path(d,part["step"]).exists())
                 if "dxf" in part:

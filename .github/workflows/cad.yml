@@ -43,6 +43,8 @@ jobs:
         run: python -m cad.legs.long_reach --params cad/parameters.json --out out
       - name: Generate redesigned EXOFRAME v0.4 STEP concepts
         run: python -m cad.legs.exoframe_v04 --params cad/parameters.json --out out
+      - name: Build joint cartridge STEP v0.5
+        run: python -m cad.joints.cartridge_v05 --out out
       - name: Upload CAD build artifacts
         uses: actions/upload-artifact@v4
         with:
